@@ -3,6 +3,7 @@ body,html {
     width: 100%;
     margin: 0;
     padding: 0;
+    background: #fff;
 }
 
 body > canvas, body > div {
@@ -12,10 +13,14 @@ body > canvas, body > div {
     left: 0;
     top: 0;
     z-index: 0;
+    margin: 0 auto;
 }
 #dataCanvas {
     display: none;
 }
 #drawCanvas {
     z-index: 1;
+}
+video {
+    display: none;
 }
