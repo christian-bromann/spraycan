@@ -6,13 +6,12 @@ function Spraycan(video,dataCanvas,drawCanvas) {
     this.drawContext     = drawCanvas.getContext('2d');
     this.userMediaObject = null;
     this.stream          = null;
-    this.index           = 0;
+    this.emptyCanvas     = true;
     this.brush           = new Image();
     this.brush.src       = 'brush2.png';
     this.halfBrushW      = 10;
     this.halfBrushH      = 10;
-
-    console.log(this.halfBrushW,this.halfBrushH);
+    this.lastPoint       = [0,0];
 
     var that = this;
     this.video.addEventListener('play', function(){
@@ -24,8 +23,8 @@ function Spraycan(video,dataCanvas,drawCanvas) {
         that.video.width = w;
         that.video.height = h;
 
-        that.dataCanvas.width = that.drawCanvas.width = (w*3)/4;
-        that.dataCanvas.height = that.drawCanvas.height = (h*3)/4;
+        that.dataCanvas.width = that.drawCanvas.width = w;
+        that.dataCanvas.height = that.drawCanvas.height = (w*3)/4;
     },false);
 
     this.initialize();
@@ -78,7 +77,7 @@ Spraycan.prototype.draw = function() {
         var g = data[i+1];
         var b = data[i+2];
 
-        if(r > 200) {
+        if((r > 180 && r < 200) && (g > 110 && g < 130) && (b > 210 & b > 230)) {
             var x = Math.ceil(Math.floor(i / 4) % spraycan.dataCanvas.width);
             var y = Math.floor(Math.floor(i/spraycan.dataCanvas.width)/4);
             spraycan.spray(x,y,[r,g,b]);
@@ -101,72 +100,32 @@ Spraycan.prototype.angleBetween2Points = function ( point1, point2 ) {
 
     var dx = point2[0] - point1[0];
     var dy = point2[1] - point1[1];
+
     return Math.atan2( dx, dy );
 };
 
-Spraycan.prototype.spray = function(x,y,rgb) {
+Spraycan.prototype.spray = function(x,y,rgb,distance,angle) {
 
     if(!x || !y) {
         return;
     }
 
-    // drawedColor = this.drawContext.getImageData(x,y,1,1).data;
-    // if(drawedColor[0] !== 0 || drawedColor[1] !== 0 || drawedColor[2] !== 0) {
-    //     return false;
-    // }
-
-    this.drawContext.strokeStyle='#FF0000';
-    this.drawContext.lineWidth=5;
-
-    // this.dataContext.beginPath();
-    // this.dataContext.moveTo(x-10,y-10);
-    // this.dataContext.lineTo(x+10,y-10);
-    // this.dataContext.lineTo(x+10,y+10);
-    // this.dataContext.lineTo(x-10,y+10);
-    // this.dataContext.lineTo(x-10,y-10);
-    // this.dataContext.moveTo(x,y-10);
-    // this.dataContext.lineTo(x,y+10);
-    // this.dataContext.moveTo(x-10,y);
-    // this.dataContext.lineTo(x+10,y);
-    // this.drawContext.stroke();
-    // this.drawContext.closePath();
-    
-    
-
-    if (this.index === 0) {
-        console.log('start');
+    if (this.emptyCanvas) {
         this.drawContext.beginPath();
         this.drawContext.moveTo(x,y);
         this.lastPoint = [x,y];
+        this.emptyCanvas = false;
     } else {
-        // this.drawContext.moveTo(this.lastPoint[0],this.lastPoint[1]);
-        var distance = parseInt( this.distanceBetween2Points( this.lastPoint, [x,y] ) ,10);
 
-        // if(distance > 100) {
-        //     this.drawContext.closePath();
-        //     this.index = 0;
-        //     this.draw(x,y);
-        //     return false;
-        // }
-
-        var angle = this.angleBetween2Points( this.lastPoint, [x,y] );
+        distance = parseInt( this.distanceBetween2Points( this.lastPoint, [x,y] ) ,10);
+        angle    = this.angleBetween2Points( this.lastPoint, [x,y] );
+        
         for ( var z=0; (z<=distance || z===0); z++ ) {
             x = this.lastPoint[0] + (Math.sin(angle) * z) - this.halfBrushW;
             y = this.lastPoint[1] + (Math.cos(angle) * z) - this.halfBrushH;
             this.drawContext.drawImage(this.brush, x, y);
         }
-
-        // this.drawContext.lineTo(x,y);
-        // this.drawContext.lineJoin = 'round';
-        // this.drawContext.stroke();
+        
         this.lastPoint = [x,y];
     }
-    ++this.index;
-
-
-
-    // this.drawContext.arc(x,y,5,0,Math.PI*2, false);
-    // this.drawContext.fillStyle = 'rgb('+rgb[0]+','+rgb[1]+','+rgb[2]+')';
-    // this.drawContext.fill();
-    
 };
