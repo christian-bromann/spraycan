@@ -7,9 +7,10 @@
         dataCanvas   = document.getElementById('dataCanvas'),
         drawCanvas   = document.getElementById('drawCanvas');
     
-    window.spraycan     = new Spraycan(videoElement,dataCanvas,drawCanvas);
+    window.spraycan  = new Spraycan(videoElement,dataCanvas,drawCanvas);
 
-    spraycan.start();
+    window.spraycan.start();
+    window.addEventListener('click', window.spraycan.clearCanvas.bind(spraycan),false);
      
     // var map;
     // var panorama;
@@ -33,6 +34,8 @@
     //     zoom:1,
     //     pitch:0
     // });
+
+
 
 }());
 
