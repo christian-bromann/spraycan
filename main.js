@@ -12,28 +12,29 @@
     window.spraycan.start();
     window.addEventListener('click', window.spraycan.clearCanvas.bind(spraycan),false);
      
-    // var map;
-    // var panorama;
-    // var astorPlace = new google.maps.LatLng(40.729884, -73.990988);
+    var map;
+    window.panorama = {};
+    var astorPlace = new google.maps.LatLng(40.729884, -73.990988);
 
-    // // Set up the map
-    // var mapOptions = {
-    //     center: astorPlace,
-    //     zoom: 18,
-    //     mapTypeId: google.maps.MapTypeId.ROADMAP,
-    //     streetViewControl: false
-    // };
+    // Set up the map
+    var mapOptions = {
+        center: astorPlace,
+        zoom: 10,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        streetViewControl: false,
+        disableDefaultUI: true
+    };
 
-    // map = new google.maps.Map(streetView,mapOptions);
+    map = new google.maps.Map(streetView,mapOptions);
 
-    // panorama = map.getStreetView();
-    // panorama.setPosition(astorPlace);
-    // panorama.setVisible(true);
-    // panorama.setPov({
-    //     heading: 265,
-    //     zoom:1,
-    //     pitch:0
-    // });
+    panorama = map.getStreetView();
+    panorama.setPosition(astorPlace);
+    panorama.setVisible(true);
+    panorama.setPov({
+        heading: 265,
+        zoom:1,
+        pitch:0
+    });
 
 
 
