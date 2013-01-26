@@ -1,0 +1,18 @@
+{
+    "manifest_version": 2,
+    "name": "spraycan",
+    "version": "0.1",
+    "description": "spraycan screenshot extension",
+    "browser_action":   {
+        "default_icon": "icon.png"
+    },
+    "background": {
+        "page": "background.html"
+    },
+    "permissions": ["tabs", "cookies", "*://*/"],
+    "content_scripts": [{
+        "js": ["js/contentscript.js"],
+        "matches": ["<all_urls>"]
+    }],
+    "content_security_policy": "script-src 'self' http://localhost; object-src 'self'"
+}

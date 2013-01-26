@@ -1,7 +1,7 @@
 "use strict";
 
 
-(function() {
+(function(Spraycan,google) {
     var videoElement = document.querySelector('video'),
         streetView   = document.querySelector('div'),
         dataCanvas   = document.getElementById('dataCanvas'),
@@ -10,22 +10,18 @@
     window.spraycan  = new Spraycan(videoElement,dataCanvas,drawCanvas);
 
     window.spraycan.start();
-    window.addEventListener('click', window.spraycan.clearCanvas.bind(spraycan),false);
+    window.addEventListener('click', window.spraycan.clearCanvas.bind(window.spraycan),false);
      
-    var map;
-    window.panorama = {};
-    var astorPlace = new google.maps.LatLng(40.729884, -73.990988);
-
-    // Set up the map
-    var mapOptions = {
-        center: astorPlace,
-        zoom: 10,
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        streetViewControl: false,
-        disableDefaultUI: true
-    };
-
-    map = new google.maps.Map(streetView,mapOptions);
+    var panorama,
+        astorPlace = new google.maps.LatLng(40.729884, -73.990988),
+        mapOptions = {
+            center: astorPlace,
+            zoom: 10,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            streetViewControl: false,
+            disableDefaultUI: true
+        },
+        map = new google.maps.Map(streetView,mapOptions);
 
     panorama = map.getStreetView();
     panorama.setPosition(astorPlace);
@@ -38,4 +34,4 @@
 
 
 
-}());
+}(Spraycan,google));
