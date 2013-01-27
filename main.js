@@ -8,15 +8,16 @@
         drawCanvas   = document.getElementById('drawCanvas');
     
     window.spraycan   = new Spraycan(videoElement,dataCanvas,drawCanvas);
-    window.streetView = new StreetView(mapCanvas,40.729884,-73.990988);
+    window.streetView = new StreetView(mapCanvas,40.6983188,-73.9884594);
 
     window.spraycan.start();
     window.streetView.init({
         zoom: 10,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         streetViewControl: false,
-        disableDefaultUI: true
+        disableDefaultUI: true,
+        mapTypeControl: true
     });
-    window.addEventListener('click', window.spraycan.clearCanvas.bind(window.spraycan),false);
+    window.addEventListener('click', window.spraycan.setupCan.bind(window.spraycan),false);
     
 }(Spraycan,StreetView,google));

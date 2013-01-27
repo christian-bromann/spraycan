@@ -19,21 +19,27 @@ var spraycanApp = function(window,document,$,undefined) {
                         
                         loadedImages.push(image);
 
-                        geoData = JSON.parse(data.geoData[i].replace(/'/g,'"'));
+                        geoData = JSON.parse(data.geoData[i].replace(/'/g,'"').replace(/\//,''));
                         adressbar = $('<div />').html(geoData.formatted_address);
 
-                        article = $('<article />');
-                        img = $('<img />').attr('src','/blog/img/uploads/'+image)
-                                          .css('display','none');
+                        article = $('<article />').css('display','none');
+                        img = $('<img />').attr('src','/blog/img/uploads/'+image);
                         
-                        article.append(img);
-                        article.append(adressbar);
-                        section.append(article);
-                        img.fadeIn();
+                        var objects = {article:article,adressbar:adressbar,img:img};
+                        
+                        img.load((function() {
+                            this.article.append(this.img);
+                            this.article.append(this.adressbar);
+                            section.append(this.article);
+                            this.article.fadeIn();
+                        }).bind(objects));
                         
                         ++i;
                     });
                 }
+            },
+            error: function(e) {
+                console.error(e);
             }
         });
 

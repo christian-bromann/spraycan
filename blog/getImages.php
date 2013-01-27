@@ -1,10 +1,8 @@
 <?php
-error_reporting(E_ALL ^ E_NOTICE);
-
 $loadedImages = preg_split('/,/',$_POST['loaded']);
-$ignoredFiles = ['.','..','.DS_Store'];
-$newImages    = [];
-$geoData      = [];
+$ignoredFiles = array('.','..','.DS_Store');
+$newImages    = array();
+$geoData      = array();
 
 if (isset($loadedImages) && $handle = opendir('img/uploads')) {
     
@@ -23,7 +21,7 @@ if (isset($loadedImages) && $handle = opendir('img/uploads')) {
 
     if(count($newImages)) {
         echo '{"images": ["'.join('","',$newImages).'"],';
-        echo ' "geoData":["'.join('","',str_replace("\"","'",$geoData)).'"]}';
+        echo ' "geoData":["'.join('","',str_replace("\"","'",str_replace("\\", "", $geoData))).'"]}';
     } else {
         echo '{}';
     }
@@ -32,3 +30,4 @@ if (isset($loadedImages) && $handle = opendir('img/uploads')) {
 } else {
     header("HTTP/1.0 500 Internal Server Error");
 }
+?>

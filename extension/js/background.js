@@ -37,7 +37,7 @@ function uploadImage(image,geoData) {
       }
     };
 
-    xhr.open('POST', 'http://spraycan.dev/blog/upload.php', true);
+    xhr.open('POST', 'http://spraycan.christian-bromann.com/blog/upload.php', true);
     xhr.setRequestHeader('Cache-Control', 'no-cache');
     xhr.send(formData);
 }

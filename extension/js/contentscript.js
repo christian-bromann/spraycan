@@ -1,5 +1,6 @@
 var canvas  = document.getElementById('drawCanvas'),
-    context = canvas.getContext('2d');
+    context = canvas.getContext('2d'),
+    cntClicks = 0;
 
 
 function getGeoLocation(lat,lng,cb) {
@@ -24,7 +25,13 @@ function getGeoLocation(lat,lng,cb) {
 }
 
 window.addEventListener('click', function() {
-    if(canvas !== null && canvas.getAttribute('data-isempty') === "false") {
+
+    ++cntClicks;
+    if(cntClicks % 3 === 1) {
+        return false;
+    }
+
+    if(canvas !== null && canvas.getAttribute('data-isempty') === 'false' && canvas.getAttribute('data-isready') === 'true') {
         
         var lat = canvas.getAttribute('data-lat'),
             lng = canvas.getAttribute('data-lng');
@@ -32,14 +39,19 @@ window.addEventListener('click', function() {
         getGeoLocation(lat,lng,function(geoData) {
             chrome.extension.sendMessage({action:'takeScreenshot',geoData: geoData});
         });
+
+    } else {
+        canvas.setAttribute('data-isready','true');
+        this.drawCanvas.style.zIndex = 1;
     }
 });
 
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     if(request.action === 'cleanup') {
         canvas.setAttribute('data-isempty','true');
+        canvas.setAttribute('data-isready','false');
         canvas.style.zIndex = 0;
-        
+
         context.beginPath();
         context.clearRect( 0, 0, this.dataCanvas.width, this.dataCanvas.height );
         context.closePath();
