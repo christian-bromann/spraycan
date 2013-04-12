@@ -7,11 +7,11 @@ body,html {
     overflow: hidden;
 }
 
-body > canvas, body > div {
+body > canvas, body > .maps {
     position: absolute;
     left: 0;
     top: 0;
-    z-index: 0;
+    z-index: 1;
     margin: 0 auto;
 }
 body > div {
@@ -25,6 +25,8 @@ body > div {
     position:absolute;
     top:50%;
     left: 50%;
+    z-index: 0;
+    border: 1px solid red;
     -webkit-transform:translate(-50%, -50%);
     -moz-transform:translate(-50%, -50%);
     -ms-transform:translate(-50%, -50%);
@@ -33,4 +35,18 @@ body > div {
 }
 video {
     display: none;
+}
+
+.mode {
+    width: 100px;
+    height: 105px;
+    background: url('img/mode.png') no-repeat -10px -25px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+}
+
+.spray {
+    background-position: -110px -25px;
 }

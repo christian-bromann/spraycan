@@ -1,14 +1,14 @@
-"use strict";
-
-
 (function(Spraycan,StreetView,google) {
+
+    'use strict';
+
     var videoElement = document.querySelector('video'),
-        mapCanvas    = document.querySelector('div'),
+        mapCanvas    = document.querySelector('.maps'),
         dataCanvas   = document.getElementById('dataCanvas'),
         drawCanvas   = document.getElementById('drawCanvas');
-    
+
     window.spraycan   = new Spraycan(videoElement,dataCanvas,drawCanvas);
-    window.streetView = new StreetView(mapCanvas,40.6983188,-73.9884594);
+    window.streetView = new StreetView(mapCanvas,40.6929138,-73.9884594);
 
     window.spraycan.start();
     window.streetView.init({
@@ -16,8 +16,8 @@
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         streetViewControl: false,
         disableDefaultUI: true,
-        mapTypeControl: true
+        mapTypeControl: false
     });
     window.addEventListener('click', window.spraycan.setupCan.bind(window.spraycan),false);
-    
+
 }(Spraycan,StreetView,google));
