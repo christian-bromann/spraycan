@@ -12,12 +12,14 @@
 
     window.spraycan.start();
     window.streetView.init({
-        zoom: 10,
+        zoom: 0,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         streetViewControl: false,
         disableDefaultUI: true,
         mapTypeControl: false
     });
+
     window.addEventListener('click', window.spraycan.setupCan.bind(window.spraycan),false);
+    window.addEventListener('keyup', window.streetView.jump.bind(window.streetView),false);
 
 }(Spraycan,StreetView,google));
