@@ -21,7 +21,17 @@ function getGeoLocation(lat,lng,cb) {
     xhr.send();
 }
 
-window.addEventListener('click', function() {
+function triggerCleanUpEvent() {
+    var evt = document.createEvent("Events");
+    evt.initEvent('cleanUp', true, true);
+    window.dispatchEvent(evt);
+}
+
+window.addEventListener('click', function(e) {
+
+    if(e.target.nodeName === 'svg') {
+        return;
+    }
 
     console.log('isempty? ',canvas.getAttribute('data-isempty') === 'false');
     console.log('isready? ',canvas.getAttribute('data-isready') === 'true');
@@ -35,13 +45,13 @@ window.addEventListener('click', function() {
             chrome.extension.sendMessage({action:'takeScreenshot',geoData: geoData});
         });
 
+    } else {
+        triggerCleanUpEvent();
     }
 });
 
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     if(request.action === 'cleanup') {
-        var evt = document.createEvent("Events");
-        evt.initEvent('cleanUp', true, true);
-        window.dispatchEvent(evt);
+        triggerCleanUpEvent();
     }
 });

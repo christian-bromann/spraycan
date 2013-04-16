@@ -19,7 +19,4 @@
         mapTypeControl: false
     });
 
-    window.addEventListener('click', window.spraycan.setupCan.bind(window.spraycan),false);
-    window.addEventListener('keyup', window.streetView.jump.bind(window.streetView),false);
-
 }(Spraycan,StreetView,google));
