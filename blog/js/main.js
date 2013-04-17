@@ -12,28 +12,33 @@ var spraycanApp = function(window,document,$,undefined) {
             type: 'POST',
             data: 'loaded='+loadedImages.join(','),
             success: function(data) {
-                
+
                 if(data.images && data.images.length) {
                     i = 0;
                     data.images.forEach(function(image) {
-                        
+
                         loadedImages.push(image);
 
                         geoData = JSON.parse(data.geoData[i].replace(/'/g,'"').replace(/\//,''));
                         adressbar = $('<div />').html(geoData.formatted_address);
 
-                        article = $('<article />').css('display','none');
+                        article = $('<a />')
+                            .css('display','none')
+                            .attr('href','/blog/img/uploads/'+image)
+                            .attr('rel','lightbox')
+                            .attr('title',geoData.formatted_address);
                         img = $('<img />').attr('src','/blog/img/uploads/'+image);
-                        
+
                         var objects = {article:article,adressbar:adressbar,img:img};
-                        
+
                         img.load((function() {
                             this.article.append(this.img);
                             this.article.append(this.adressbar);
-                            section.append(this.article);
+                            section.prepend(this.article);
                             this.article.fadeIn();
+                            this.article.colorbox({maxWidth: '80%'});
                         }).bind(objects));
-                        
+
                         ++i;
                     });
                 }
@@ -59,7 +64,7 @@ var spraycanApp = function(window,document,$,undefined) {
 
     // go into strict mode
     "use strict";
-    
+
     var app = spraycanApp(window,document,$);
 
 })(window,document,jQuery);

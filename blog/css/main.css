@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=Cousine);
+
 body,html {
     margin: 0 0 20px;
     padding: 0;
@@ -6,7 +8,7 @@ body,html {
 body {
     background-color: #342f31;
     color: #EEEEEE;
-    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-family: 'Cousine', sans-serif;
 }
 
 a,a:link,a:hover,a:visited {
@@ -20,7 +22,6 @@ header,section,footer {
 }
 
 header {
-    border-bottom: 1px solid #ffffff;
     margin-bottom: 15px;
     text-align: center;
 }
@@ -29,36 +30,44 @@ header img {
 }
 
 footer {
+    margin: 40px auto 0;
     clear: both;
-    border-top: 1px solid #ffffff;
     font-size: 10px;
     padding-top: 5px;
-    text-align: right;
+    text-align: center;
 }
 
-section > article {
+section {
+    overflow: hidden;
+    position: relative;
+}
+
+section > a {
     width: 307px;
     height: auto;
     float: left;
-    margin: 0 3% 2% 0;
+    margin: 0 3% 4% 0;
     position: relative;
     overflow: hidden;
+    cursor:pointer;
 }
-section > article:nth-child(3n) {
+
+section > a:nth-child(3n+1) {
+    clear: both;
+}
+
+section > a:nth-child(3n) {
     margin-right: 0;
 }
-section > article > img {
+section > a > img {
     width: 100%;
     height: auto;
 }
-section > article > div {
-    position: absolute;
-    bottom: 3px;
-    padding: 10px;
+section > a > div {
+    color: #FFFFFF;
     font-size: 12px;
-    background: #ffffff;
-    opacity: 0.8;
-    color: #000000;
+    letter-spacing: 0.3px;
+    margin: 7px 0 0;
     width: 100%;
 }
 
