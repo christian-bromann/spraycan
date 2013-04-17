@@ -38,9 +38,9 @@ video {
 }
 
 .mode {
-    width: 100px;
+    width: 130px;
     height: 105px;
-    background: url('img/mode.png') no-repeat -10px -25px;
+    background: url('img/mode.png') no-repeat -140px -25px;
     position: fixed;
     top: 20px;
     right: 20px;
@@ -48,5 +48,5 @@ video {
 }
 
 .spray {
-    background-position: -110px -25px;
+    background-position: -10px -25px;
 }

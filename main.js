@@ -12,11 +12,10 @@
 
     window.spraycan.start();
     window.streetView.init({
-        zoom: 0,
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        streetViewControl: false,
-        disableDefaultUI: true,
-        mapTypeControl: false
+        linksControl: true,
+        panControl: false,
+        zoomControl: false,
+        enableCloseButton: false
     });
 
 }(Spraycan,StreetView,google));

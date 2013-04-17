@@ -29,7 +29,7 @@ function triggerCleanUpEvent() {
 
 window.addEventListener('click', function(e) {
 
-    if(e.target.nodeName === 'svg') {
+    if(e.target.nodeName === 'svg' || e.target.className === 'mode spray') {
         return;
     }
 
