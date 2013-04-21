@@ -7,12 +7,13 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 
         takeScreenshot(function(image) {
             console.log('got screenshot');
-            uploadImage(image,geoData, function() {
-                chrome.tabs.getSelected(null, function(tab) {
-                    console.log('clean up that shit');
-                    chrome.tabs.sendMessage(tab.id, {action: 'cleanup'});
-                });
+
+            chrome.tabs.getSelected(null, function(tab) {
+                console.log('clean up that shit');
+                chrome.tabs.sendMessage(tab.id, {action: 'cleanup'});
             });
+
+            uploadImage(image,geoData);
         });
     }
 
@@ -22,7 +23,7 @@ function takeScreenshot(cb) {
     chrome.tabs.captureVisibleTab(null, {format:'png'}, cb);
 }
 
-function uploadImage(image,geoData,cb) {
+function uploadImage(image,geoData) {
     var xhr = new XMLHttpRequest();
     var formData = new FormData();
 
@@ -46,6 +47,4 @@ function uploadImage(image,geoData,cb) {
     xhr.setRequestHeader('Cache-Control', 'no-cache');
     xhr.send(formData);
     console.log('send request to server');
-
-    cb();
 }

@@ -29,7 +29,7 @@ function triggerCleanUpEvent() {
 
 window.addEventListener('click', function(e) {
 
-    if(e.target.nodeName === 'svg' || e.target.className === 'mode spray') {
+    if(e.target.nodeName === 'svg' || e.target.className === 'mode spray' || canvas.getAttribute('data-saveImage') === 'true') {
         return;
     }
 
@@ -39,6 +39,8 @@ window.addEventListener('click', function(e) {
 
         var lat = canvas.getAttribute('data-lat'),
             lng = canvas.getAttribute('data-lng');
+
+        canvas.setAttribute('data-saveImage','true');
 
         getGeoLocation(lat,lng,function(geoData) {
             console.log('send message to take screenshot ',{action:'takeScreenshot',geoData: geoData});
