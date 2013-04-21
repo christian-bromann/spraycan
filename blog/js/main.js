@@ -5,7 +5,8 @@ var spraycanApp = function(window,document,$,undefined) {
 
     var section = $('section'),
         loadedImages = [],
-        img,article,geoData,i,adressbar;
+        firstRequest = true,
+        img,article,geoData,i,loaded,adressbar;
 
     function getImages() {
         $.ajax('/blog/getImages.php', {
@@ -15,11 +16,16 @@ var spraycanApp = function(window,document,$,undefined) {
 
                 if(data.images && data.images.length) {
                     i = 0;
+                    loaded = 0;
                     data.images.forEach(function(image) {
 
                         loadedImages.push(image);
 
-                        geoData = JSON.parse(data.geoData[i].replace(/'/g,'"').replace(/\//,''));
+                        try {
+                            geoData = JSON.parse(data.geoData[i].replace(/'/g,'"').replace(/\//,''));
+                        } catch(e) {
+                            geoData = {formatted_address:'Adresse nicht bekannt'};
+                        }
                         adressbar = $('<div />').html(geoData.formatted_address);
 
                         article = $('<a />')
@@ -37,6 +43,12 @@ var spraycanApp = function(window,document,$,undefined) {
                             section.prepend(objects.article);
                             objects.article.fadeIn();
                             objects.article.colorbox({maxWidth: '80%'});
+                            ++loaded;
+
+                            if(loaded === data.images.length) {
+                                firstRequest = false;
+                                getImages();
+                            }
                         });
 
                         ++i;
@@ -48,7 +60,9 @@ var spraycanApp = function(window,document,$,undefined) {
             }
         });
 
-        window.setTimeout(getImages,1000);
+        if(!firstRequest) {
+            window.setTimeout(getImages,1000);
+        }
     }
 
     // on document load
