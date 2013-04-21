@@ -31,13 +31,13 @@ var spraycanApp = function(window,document,$,undefined) {
 
                         var objects = {article:article,adressbar:adressbar,img:img};
 
-                        img.load((function() {
-                            this.article.append(this.img);
-                            this.article.append(this.adressbar);
-                            section.prepend(this.article);
-                            this.article.fadeIn();
-                            this.article.colorbox({maxWidth: '80%'});
-                        }).bind(objects));
+                        img.load(function() {
+                            objects.article.append(objects.img);
+                            objects.article.append(objects.adressbar);
+                            section.prepend(objects.article);
+                            objects.article.fadeIn();
+                            objects.article.colorbox({maxWidth: '80%'});
+                        });
 
                         ++i;
                     });

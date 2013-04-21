@@ -1,5 +1,9 @@
 @import url(http://fonts.googleapis.com/css?family=Cousine);
 
+header,article,section,footer,aside {
+    display: block;
+}
+
 body,html {
     margin: 0 0 20px;
     padding: 0;
@@ -62,6 +66,7 @@ section > a:nth-child(3n) {
 section > a > img {
     width: 100%;
     height: auto;
+    border: 0;
 }
 section > a > div {
     color: #FFFFFF;

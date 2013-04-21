@@ -42,7 +42,7 @@ function uploadImage(image,geoData,cb) {
         }
     };
 
-    xhr.open('POST', 'http://spraycan.dev/blog/upload.php', true);
+    xhr.open('POST', 'http://spraycan.christian-bromann.com/blog/upload.php', true);
     xhr.setRequestHeader('Cache-Control', 'no-cache');
     xhr.send(formData);
     console.log('send request to server');
