@@ -9,7 +9,7 @@ var spraycanApp = function(window,document,$,undefined) {
         img,article,geoData,i,loaded,adressbar;
 
     function getImages() {
-        $.ajax('/blog/getImages.php', {
+        $.ajax('/getImages.php', {
             type: 'POST',
             data: 'loaded='+loadedImages.join(','),
             success: function(data) {
@@ -30,10 +30,10 @@ var spraycanApp = function(window,document,$,undefined) {
 
                         article = $('<a />')
                             .css('display','none')
-                            .attr('href','/blog/img/uploads/'+image)
+                            .attr('href','/img/uploads/'+image)
                             .attr('rel','lightbox')
                             .attr('title',geoData.formatted_address);
-                        img = $('<img />').attr('src','/blog/img/uploads/'+image);
+                        img = $('<img />').attr('src','/img/uploads/'+image);
 
                         var objects = {article:article,adressbar:adressbar,img:img};
 
