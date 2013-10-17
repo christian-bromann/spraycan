@@ -20,11 +20,18 @@ body,html {
     font: 12px 'OCRF-Regular',Helvetica,sans-serif;
 }
 
-h1 {
-    font: 49px 'OCRF-Bold',Helvetica,sans-serif;
+h1,h2 {
+    font-family: 'OCRF-Bold',Helvetica,sans-serif;
     margin: 0;
     text-transform: uppercase;
     letter-spacing: 4px;
+}
+h1 {
+    font-size: 49px;
+}
+h2 {
+    font-size: 30px;
+    margin: 0 30px;
 }
 
 body > canvas, body > .maps {
@@ -62,15 +69,22 @@ video {
     background: url('img/mode.png') no-repeat -140px -25px;
     position: fixed;
     top: 20px;
-    right: 20px;
+    left: 50%;
     z-index: 10;
+    margin-left: -65px;
 }
 
 .spray {
     background-position: -10px -25px;
 }
 
-.startscreen {
+.centered {
+    display: -webkit-box;
+    -webkit-box-pack:center;
+    -webkit-box-align:center;
+}
+
+.screen {
     width: 100%;
     height: 100%;
     background: #00fbba;
@@ -78,16 +92,13 @@ video {
     z-index: 100;
     text-align: center;
     opacity: 1;
-    display: -webkit-box;
-    -webkit-box-pack:center;
-    -webkit-box-align:center;
     transition-property: all;
     transition-duration: 0.5s;
 }
-.startscreen.hide {
+.hide {
     opacity: 0;
 }
-.startscreen p {
+.screen p {
     font-size: 36px;
     width: 800px;
     margin: 0 auto;
@@ -95,8 +106,17 @@ video {
     letter-spacing: 4px;
     line-height: 1.3em;
 }
-.startscreen .wrapper > img {
+.screen > .wrapper > img {
     width: 500px;
+}
+.screen.finish p {
+    width: 100%;
+    margin: 200px 0;
+}
+.screen.finish h2 {
+    margin-top: 100px;
+    width: 700px;
+    margin: 0 auto;
 }
 .instructions {
     list-style: none;
@@ -115,4 +135,16 @@ video {
 .instructions img {
     display: block;
     margin-top: 20px;
+}
+
+.info {
+    width: 100%;
+    height: 80px;
+    position: fixed;
+    bottom: 0;
+    background: #00fbba;
+    z-index: 0;
+    display: -webkit-box;
+    -webkit-box-pack:center;
+    -webkit-box-align:center;
 }
