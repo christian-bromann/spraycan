@@ -28,12 +28,7 @@ function triggerCleanUpEvent() {
     window.dispatchEvent(evt);
 }
 
-window.addEventListener('click', function(e) {
-
-    if(e.target.nodeName === 'svg' || e.target.className === 'mode spray' || canvas.getAttribute('data-saveImage') === 'true' || !isAppStarted) {
-        isAppStarted = true;
-        return;
-    }
+window.addEventListener('saveImage', function(e) {
 
     console.log('isempty? ',canvas.getAttribute('data-isempty') === 'false');
     console.log('isready? ',canvas.getAttribute('data-isready') === 'true');
@@ -52,6 +47,7 @@ window.addEventListener('click', function(e) {
     } else {
         triggerCleanUpEvent();
     }
+
 });
 
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {

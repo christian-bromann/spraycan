@@ -10,7 +10,6 @@
     window.spraycan   = new Spraycan(videoElement,dataCanvas,drawCanvas);
     window.streetView = new StreetView(mapCanvas,40.6929138,-73.9884594);
 
-    window.spraycan.start();
     window.streetView.init({
         linksControl: true,
         panControl: false,
