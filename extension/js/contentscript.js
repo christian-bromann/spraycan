@@ -1,4 +1,5 @@
-var canvas  = document.getElementById('drawCanvas');
+var canvas  = document.getElementById('drawCanvas'),
+    isAppStarted = false;
 
 function getGeoLocation(lat,lng,cb) {
 
@@ -29,7 +30,8 @@ function triggerCleanUpEvent() {
 
 window.addEventListener('click', function(e) {
 
-    if(e.target.nodeName === 'svg' || e.target.className === 'mode spray' || canvas.getAttribute('data-saveImage') === 'true') {
+    if(e.target.nodeName === 'svg' || e.target.className === 'mode spray' || canvas.getAttribute('data-saveImage') === 'true' || !isAppStarted) {
+        isAppStarted = true;
         return;
     }
 

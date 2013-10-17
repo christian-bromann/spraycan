@@ -3,13 +3,11 @@
  */
 @font-face {
     font-family: 'OCRF-Bold';
-    src: url('../fonts/OCRF-Bold.ttf') format('truetype'),
-         url('../fonts/OCRF-Bold.otf') format('opentype');
+    src: url('fonts/OCRF-Bold.otf') format('opentype');
 }
 @font-face {
     font-family: 'OCRF-Regular';
-    src: url('../fonts/OCRF-Regular.ttf') format('truetype'),
-         url('../fonts/OCRF-Regular.otf') format('opentype');
+    src: url('fonts/OCRF-Regular.otf') format('opentype');
 }
 
 body,html {
@@ -79,9 +77,15 @@ video {
     position: fixed;
     z-index: 100;
     text-align: center;
+    opacity: 1;
     display: -webkit-box;
     -webkit-box-pack:center;
     -webkit-box-align:center;
+    transition-property: all;
+    transition-duration: 0.5s;
+}
+.startscreen.hide {
+    opacity: 0;
 }
 .startscreen p {
     font-size: 36px;

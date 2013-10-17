@@ -15,6 +15,9 @@
         linksControl: true,
         panControl: false,
         zoomControl: false,
+        scaleControl: false,
+        scrollwheel: false,
+        draggable: false,
         enableCloseButton: false
     });
 
