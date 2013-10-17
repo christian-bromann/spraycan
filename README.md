@@ -1,36 +1,37 @@
 Spraycan - a post digital experiment
 ====================================
 
-Just imagine! You are able to spray graffiti on most every wall in the world, completely legaly!?
+Just imagine! You are able to spray graffiti on nearly every wall in the world, completely legaly!?
 Spraycan is a collaborative project of [Christian Bromann](christian-bromann.com) and [Marius Foerster](mezla.de)
 which can make this happen!
 
-**The idea:** running arround in Googles StreetView mode to find a nice spot for tagging. A
+**The idea:** take a walk in Googles StreetView mode to find a nice spot for tagging. A
 special prepared spraycan with an bulb on the top sends light signals to a camera. The webapp
-finds the light spot and draws something on a canvas. After finishing your masterpiece press
-the red button to publish the image. Watch the video to get a better comprehension for that.
+finds the lightspot and draws something on a canvas. After finishing your masterpiece you can
+press a red button to publish the image. An Arduino microcontroller in the spraycan controls all
+user actions and sends events via Bluetooth and serial connection to a nodeJS server. Watch the
+video to get a better comprehension for that.
 
 [![Vimeo video](http://b.vimeocdn.com/ts/405/275/405275272_960.jpg "Spraycan - a post digital experiment")](http://vimeo.com/58402906)
 
-Find our first attempts [here](http://spraycan.christian-bromann.com/blog/)!
+Find all pictures of our first exhibition on [spraycan.de](http://spraycan.de)!
 
 
-#### We will present this project on an exhibition in Berlin
+#### We will present this project again at "Lange Nacht der Bibliotheken"
 
 **date**<br>
-Tuesday, 23. till Friday, 26. April 2013<br>
-10.00 – 18.00 Uhr
+Thursday, 24. October 2013<br>
+5pm – 12pm
 
 **venue**<br>
-designtransfer<br>
-Berlin University of the Arts<br>
-Einsteinufer 43-53<br>
-10587 Berlin-Charlottenburg<br>
+Berlin Institute of Technology university library<br>
+Fasanenstraße 88<br>
+10623 Berlin<br>
 
 **Admission is free.**
 
 U: Ernst-Reuter-Platz<br>
 S: Tiergarten<br>
-Bus 245: Marchbrücke<br>
+Bus 110: Hertzallee<br>
 
-Find more information [here](http://www.designtransfer.udk-berlin.de/index.php?n=Veranstaltungen.Postdigitalistbesser).
+Find more information [here](http://www.lange-nacht-der-bibliotheken.de/index.php?id=8).
