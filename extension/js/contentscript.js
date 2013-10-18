@@ -23,30 +23,25 @@ function getGeoLocation(lat,lng,cb) {
 }
 
 function triggerCleanUpEvent() {
-    var evt = document.createEvent("Events");
+    var evt = document.createEvent('Events');
     evt.initEvent('cleanUp', true, true);
     window.dispatchEvent(evt);
 }
 
 window.addEventListener('saveImage', function(e) {
 
-    console.log('isempty? ',canvas.getAttribute('data-isempty') === 'false');
-    console.log('isready? ',canvas.getAttribute('data-isready') === 'true');
-    if(canvas !== null && canvas.getAttribute('data-isempty') === 'false' && canvas.getAttribute('data-isready') === 'true') {
-
-        var lat = canvas.getAttribute('data-lat'),
-            lng = canvas.getAttribute('data-lng');
-
-        canvas.setAttribute('data-saveImage','true');
-
-        getGeoLocation(lat,lng,function(geoData) {
-            console.log('send message to take screenshot ',{action:'takeScreenshot',geoData: geoData});
-            chrome.extension.sendMessage({action:'takeScreenshot',geoData: geoData});
-        });
-
-    } else {
+    if(canvas === null || canvas.getAttribute('data-isempty') === 'true') {
         triggerCleanUpEvent();
+        return;
     }
+
+    var lat = canvas.getAttribute('data-lat'),
+        lng = canvas.getAttribute('data-lng');
+
+    getGeoLocation(lat,lng,function(geoData) {
+        console.log('send message to take screenshot ',{action:'takeScreenshot',geoData: geoData});
+        chrome.extension.sendMessage({action:'takeScreenshot',geoData: geoData});
+    });
 
 });
 
