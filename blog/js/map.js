@@ -11,7 +11,7 @@ function SpraycanMap() {
     // initialize Google map
     this.map = new google.maps.Map(this.ui.map,{
         zoom: 4,
-        center: new google.maps.LatLng(0.363882,35.044922),
+        center: new google.maps.LatLng(43.363882,0),
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
     
@@ -22,7 +22,7 @@ function SpraycanMap() {
     });
 
     // establish socket connection to update user position
-    this.socket = io.connect('http://localhost:8000');
+    this.socket = io.connect('http://qcentral.org:8000');
     this.socket.on('position',function(pos) {
 
         pos = new google.maps.LatLng(pos.lat,pos.lng);
@@ -77,20 +77,33 @@ SpraycanMap.prototype.addMarker = function(lat,lng,address,path) {
         position: new google.maps.LatLng(lat,lng),
         map: this.map,
         title: address,
-        icon: 'img/marker.png'
+        icon: 'img/marker.png',
+        imgPath: path
     });
 
-    var content = $('<div />').addClass('markerContainer');
-    var img = $('<img />').attr('src','/img/uploads/'+path);
+    var content = $('<div />').addClass('markerContainer').html(
+                      $('<div />').addClass('address').height(100).width(700).html(address).append(
+                          $('<img />').attr('src','/img/loader.gif').addClass('loader')
+                      )
+                  );
 
-    content.html(img);
-
-    var infowindow = new google.maps.InfoWindow({
+    var infoWindow = new google.maps.InfoWindow({
         content: content.html()
     });
 
-    google.maps.event.addListener(marker, 'click', function() {
-        infowindow.open(this.map,marker);
+    google.maps.event.addListener(marker, 'click', function(a,b,c) {
+        var img = $('<img />').attr('src','/img/uploads/'+this.imgPath).addClass('image');
+
+        // after image loaded, show it
+        img.load(function(a,b,c) {
+            var content = $('<div />').addClass('markerContainer').html(
+                              $('<div />').addClass('address').html(address).append(img)
+                          );
+
+            infoWindow.setContent(content.html());
+        });
+
+        infoWindow.open(this.map,marker);
     });
 
     return marker;
