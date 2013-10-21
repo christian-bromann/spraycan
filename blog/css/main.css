@@ -95,3 +95,8 @@ section > a > div {
     left: 50%;
     margin: -12px 0 0 -12px;
 }
+.blogLoader {
+    display: none;
+    clear: both;
+    text-align: center;
+}

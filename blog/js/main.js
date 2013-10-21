@@ -3,20 +3,16 @@ var spraycanApp = function(window,document,$,undefined) {
     // go into strict mode
     "use strict";
 
-    Object.prototype.keys = function(obj){
-        var keys = [];
-        for(var key in obj){
-            keys.push(key);
-        }
-        return keys;
-    };
-
     var section = $('section'),
+        loader = $('.blogLoader'),
         loadedImages = [],
         imagesToShow = [],
         img,article,geoData,i,loaded,adressbar;
 
     function getImages() {
+
+        loader.show();
+
         $.ajax('getImages.php', {
             type: 'POST',
             data: 'loaded='+loadedImages.join(','),
@@ -32,13 +28,14 @@ var spraycanApp = function(window,document,$,undefined) {
                         var image = data[keyDate];
                         loadedImages.push(image.path);
 
-                        if(i < Object.keys(data).length - 15) {
+                        // console.log(data);
+                        if(i < getKeys(data).length - 15) {
                             imagesToShow.push(image);
                             ++i;
                             continue;
                         }
 
-                        displayImage(image,true);
+                        displayImage(image,true,data.length);
                         ++i;
                     }
                 } else {
@@ -51,8 +48,20 @@ var spraycanApp = function(window,document,$,undefined) {
         });
     }
 
-    function displayImage(image,prepend) {
-        var geoData;
+    function getKeys(obj) {
+        var keys = [];
+        for(var key in obj){
+            keys.push(key);
+        }
+        return keys;
+    }
+
+    function displayImage(image,prepend,imageCount) {
+        var geoData, i = 0;
+
+        if(!image.path) {
+            return;
+        }
 
         try {
             geoData = JSON.parse(image.geoData.replace(/\\/g,''));
@@ -75,9 +84,11 @@ var spraycanApp = function(window,document,$,undefined) {
                 image   = img;
 
             image.load(function() {
+                ++i;
+
                 objects.article.append(objects.img);
                 objects.article.append(objects.adressbar);
-
+            
                 if(prepend) {
                     section.prepend(objects.article);
                 } else {
@@ -88,7 +99,8 @@ var spraycanApp = function(window,document,$,undefined) {
                 objects.article.colorbox({maxWidth: '80%'});
                 ++loaded;
 
-                if(loaded === 10) {//Object.keys(data).length
+                if(loaded === 12 || imageCount === i) {
+                    loader.hide();
                     getImages();
                 }
             });
