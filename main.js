@@ -20,32 +20,4 @@
         enableCloseButton: false
     });
 
-    // JUST FOR DEVELOPMENT
-    var status = 0,
-        trigger = function(eventName) {
-            var evt = document.createEvent('Events');
-            evt.initEvent(eventName, true, true);
-            window.dispatchEvent(evt);
-        };
-
-    window.addEventListener('keydown', function(e) {
-
-        if(e.which !== 32) {
-            return;
-        }
-
-        switch(status++) {
-            case 0: trigger('initApp');
-            break;
-            case 1: trigger('setup');
-            break;
-            case 2: trigger('prepareToSave');
-            break;
-            case 3: trigger('reset');
-            break;
-            default: status = 0;
-        }
-
-    });
-
 }(Spraycan,StreetView,google));
