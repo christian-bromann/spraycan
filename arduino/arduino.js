@@ -76,7 +76,10 @@ var dataHandler = function(data) {
             emit('gyroscope', { x: x, y: y, z: z });
         break;
         case 2:
-            emit('color',msg);
+            emit('resistance',msg);
+        break;
+        case 3:
+            emit('button',true);
         break;
     }
 

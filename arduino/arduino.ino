@@ -45,8 +45,12 @@ float sourceVoltage=5.0;
 float voltageR2;
 float resistor;
 float resistorValue = 0;
+
 int resistorPin = 3;
+int buttonPin = 9;
+
 int voltageR1 = 2200.0;
+int buttonValue = 1;
 long result = 0;
 
 void setup() {      
@@ -77,6 +81,7 @@ void setup() {
 
     MPU6050_write_reg (MPU6050_PWR_MGMT_1, 0);
 
+    pinMode(buttonPin, INPUT);
     pinMode(13, OUTPUT);
 }
 
@@ -130,7 +135,13 @@ void loop() {
         resistorValue = resistor;
     }
 
-    delay(100);
+    // if can button was clicked send serial message
+    if(buttonValue != digitalRead(buttonPin) && buttonValue == 0) {
+        // on buttonUp send serial
+        Serial.println(F("%3%{\"buttonClick\":true}3%3"));
+    }
+    buttonValue = digitalRead(buttonPin);
+
 }
 
 int MPU6050_read(int start, uint8_t *buffer, int size) {
