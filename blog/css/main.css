@@ -48,7 +48,7 @@ section {
     position: relative;
 }
 
-section > a {
+.images > a {
     width: 307px;
     height: auto;
     float: left;
@@ -58,19 +58,19 @@ section > a {
     cursor:pointer;
 }
 
-section > a:nth-child(3n+1) {
+.images > a:nth-child(3n+1) {
     clear: both;
 }
 
-section > a:nth-child(3n) {
+.images > a:nth-child(3n) {
     margin-right: 0;
 }
-section > a > img {
+.images > a > img {
     width: 100%;
     height: auto;
     border: 0;
 }
-section > a > div {
+.images > a > div {
     color: #FFFFFF;
     font-size: 12px;
     letter-spacing: 0.3px;
@@ -99,4 +99,15 @@ section > a > div {
     display: none;
     clear: both;
     text-align: center;
+}
+.about,.imprint {
+    display: none;
+}
+h3 {
+    margin-top: 40px;
+}
+nav {
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 40px;
 }
