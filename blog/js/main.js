@@ -56,7 +56,6 @@ SpraycanBlog.prototype.getImages = function() {
                     var image = data[keyDate];
                     this.loadedImages.push(image.path);
 
-                    // console.log(data);
                     if(i < this.getKeys(data).length - 15) {
                         this.imagesToShow.push(image);
                         ++i;
@@ -176,6 +175,10 @@ SpraycanBlog.prototype.navigate = function(e) {
 };
 
 SpraycanBlog.prototype.loadFurtherImages = function(e) {
+
+    if($('section:visible').get(0).className !== 'images') {
+        return;
+    }
 
     if($(window).scrollTop() == $(document).height() - $(window).height()) {
 

@@ -103,8 +103,16 @@ section {
 .about,.imprint {
     display: none;
 }
+.about p {
+    width: 60%;
+    line-height: 1.4em;
+    text-align: justify;
+}
+.about h1 {
+    margin: 45px 0 75px;
+}
 h3 {
-    margin-top: 40px;
+    margin: 75px 0 45px;
 }
 nav {
     text-align: center;
