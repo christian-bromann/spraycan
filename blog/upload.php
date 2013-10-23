@@ -1,5 +1,7 @@
 <?php
 
+header('Access-Control-Allow-Origin: *');
+
 if (isset($_POST['screenshot']) && isset($_POST['geodata']))
 {
     $timestamp     = time();
@@ -17,6 +19,7 @@ if (isset($_POST['screenshot']) && isset($_POST['geodata']))
     fclose( $fpTXT );
 
     header("HTTP/1.1 200 OK");
+    echo "{}";
 } else {
     header("HTTP/1.1 404 Not Found");
 }

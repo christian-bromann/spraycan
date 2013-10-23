@@ -33,13 +33,15 @@ function uploadImage(image,geoData) {
     xhr.onreadystatechange = function() {
         console.log('state change ',this.readyState);
         if (this.readyState == 4) {
+
             var response = JSON.parse(xhr.response);
             if (response.error) {
                 console.log('Error: ' + response.error.message);
                 return;
-            } else {
-                console.log('screenshot was taken');
             }
+
+            console.log('screenshot was taken');
+
         }
     };
 

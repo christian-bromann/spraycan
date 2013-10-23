@@ -62,8 +62,8 @@ SpraycanBlog.prototype.getImages = function() {
                         continue;
                     }
 
-                    this.displayImage(image,true,data.length);
                     ++i;
+                    this.displayImage(image, true, i === this.getKeys(data).length);
                 }
             } else {
                 window.setTimeout(this.getImages.bind(this),1000);
@@ -84,7 +84,7 @@ SpraycanBlog.prototype.getKeys = function(obj) {
     return keys;
 };
 
-SpraycanBlog.prototype.displayImage = function(image,prepend,imageCount) {
+SpraycanBlog.prototype.displayImage = function(image,prepend,isLastImage) {
     var geoData, i = 0;
 
     if(!image.path) {
@@ -105,7 +105,7 @@ SpraycanBlog.prototype.displayImage = function(image,prepend,imageCount) {
         .attr('title',geoData.formatted_address);
 
     var img     = $('<img />').attr('src','/img/uploads/'+image.path);
-    var objects = {article:article,adressbar:adressbar,img:img};
+    var objects = {article:article,adressbar:adressbar,img:img,isLastImage:isLastImage};
 
     img.load(function(objects) {
         ++i;
@@ -123,8 +123,10 @@ SpraycanBlog.prototype.displayImage = function(image,prepend,imageCount) {
         objects.article.colorbox({maxWidth: '80%'});
         ++this.loaded;
 
-        if(this.loaded === 12 || imageCount === i) {
+        if(this.loaded === 15 || objects.isLastImage) {
             this.ui.loader.hide();
+
+            this.checkNewImages = true;
             this.getImages();
         }
 
