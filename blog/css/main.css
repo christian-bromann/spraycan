@@ -23,8 +23,9 @@ a,a:link,a:hover,a:visited {
 }
 
 header,section,footer {
-    max-width: 980px;
+    max-width: 940px;
     margin: 0 auto;
+    padding: 0 20px;
 }
 
 header {
@@ -49,7 +50,7 @@ section {
 }
 
 .images > a {
-    width: 307px;
+    width: 294px;
     height: auto;
     float: left;
     margin: 0 3% 4% 0;
