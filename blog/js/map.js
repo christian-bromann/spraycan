@@ -11,7 +11,7 @@ function SpraycanMap() {
     // initialize Google map
     this.map = new google.maps.Map(this.ui.map,{
         zoom: 4,
-        center: new google.maps.LatLng(43.363882,0),
+        center: new google.maps.LatLng(50.363882,10),
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
     

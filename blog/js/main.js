@@ -163,7 +163,7 @@ SpraycanBlog.prototype.navigate = function(e) {
         url = elem.attr('href').replace('#!/','');
 
     this.ui.loader.hide();
-    $('section:visible').fadeOut(function() {
+    $('section:visible:not(.map)').fadeOut(function() {
 
         this.ui.pages[url].fadeIn();
 
@@ -178,7 +178,7 @@ SpraycanBlog.prototype.navigate = function(e) {
 
 SpraycanBlog.prototype.loadFurtherImages = function(e) {
 
-    if($('section:visible').get(0).className !== 'images') {
+    if($('section:visible:not(.map)').get(0).className !== 'images') {
         return;
     }
 
