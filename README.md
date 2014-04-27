@@ -17,14 +17,14 @@ video to get a better comprehension for that.
 Find all pictures of our first exhibition on [spraycan.de](http://spraycan.de)!
 
 
-#### We will present this project again at "Lange Nacht der Bibliotheken"
+#### We will present this project again at "Lange Nacht der Wissenschaften"
 
 **date**<br>
-Thursday, 24. October 2013<br>
+Saturday, 10. May 2013<br>
 5pm – 12pm
 
 **venue**<br>
-Berlin Institute of Technology university library<br>
+Berlin Institute of Technology University Library<br>
 Fasanenstraße 88<br>
 10623 Berlin<br>
 
