@@ -20,7 +20,7 @@ Find all pictures of our first exhibition on [spraycan.de](http://spraycan.de)!
 #### We will present this project again at "Lange Nacht der Wissenschaften"
 
 **date**<br>
-Saturday, 10. May 2013<br>
+Saturday, 10. May 2014<br>
 5pm – 12pm
 
 **venue**<br>
