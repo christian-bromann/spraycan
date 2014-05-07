@@ -20,10 +20,11 @@ io.sockets.on('connection', function (socket) {
 });
 
 serial.on('found', function(address, name) {
+    console.log(address,name);
  
     // check the found address with the address of the
     // bluetooth enabled Arduino device here.
-    if(name !== 'HC-06') {
+    if(name !== 'HC-05') {
         return false;
     }
 
@@ -69,16 +70,9 @@ var dataHandler = function(data) {
 
     switch(msgBus) {
         case 1:
-            var x = Math.round(msg.x / 100),
-                y = Math.round(msg.y / 100),
-                z = Math.round(msg.z / 100);
-
-            emit('gyroscope', { x: x, y: y, z: z });
-        break;
-        case 2:
             emit('resistance',msg);
         break;
-        case 3:
+        case 2:
             emit('button',true);
         break;
     }
