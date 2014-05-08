@@ -22,7 +22,7 @@ function SpraycanMap() {
     });
 
     // establish socket connection to update user position
-    this.socket = io.connect('http://qcentral.org:8000');
+    this.socket = io.connect('http://93.188.109.81:8001/');
     this.socket.on('position',function(pos) {
 
         pos = new google.maps.LatLng(pos.lat,pos.lng);
