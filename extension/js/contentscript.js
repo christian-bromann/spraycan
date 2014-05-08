@@ -36,11 +36,12 @@ window.addEventListener('saveImage', function(e) {
     }
 
     var lat = canvas.getAttribute('data-lat'),
-        lng = canvas.getAttribute('data-lng');
+        lng = canvas.getAttribute('data-lng'),
+        hotspot = canvas.getAttribute('data-hotspot');
 
     getGeoLocation(lat,lng,function(geoData) {
         console.log('send message to take screenshot ',{action:'takeScreenshot',geoData: geoData});
-        chrome.extension.sendMessage({action:'takeScreenshot',geoData: geoData});
+        chrome.extension.sendMessage({action:'takeScreenshot',geoData: geoData, hotspot: hotspot});
     });
 
 });

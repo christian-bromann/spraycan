@@ -40,6 +40,7 @@ body > canvas, body > .maps {
     top: 0;
     z-index: 1;
     margin: 0 auto;
+    opacity: 0.4;
 }
 body > div {
     width: 100%;
@@ -167,7 +168,7 @@ video {
     list-style: none;
     overflow: hidden;
     padding: 0;
-    width: 993px;
+    width: 1000px;
     margin: 100px auto 0;
 }
 .instructions li {

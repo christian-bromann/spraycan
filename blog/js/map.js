@@ -1,7 +1,6 @@
 
 function SpraycanMap() {
 
-    this.markers = [];
     this.geoData = {};
 
     this.ui = {
@@ -23,28 +22,32 @@ function SpraycanMap() {
 
     // establish socket connection to update user position
     this.socket = io.connect('http://93.188.109.81:8001/');
-    this.socket.on('position',function(pos) {
-
-        pos = new google.maps.LatLng(pos.lat,pos.lng);
-
-        this.map.setCenter(pos);
-        this.map.setZoom(17);
-
-        this.eyemarker.setPosition(pos);
-    }.bind(this));
+    this.socket.on('position', this.setPosition.bind(this));
+    this.hotspot = document.location.pathname;
 
     // load images and initalize image markers
     this.loadedImages = [];
     this.loadImages();
 }
 
+SpraycanMap.prototype.setPosition = function(pos) {
+
+    pos = new google.maps.LatLng(pos.lat,pos.lng);
+
+    this.map.setCenter(pos);
+    this.map.setZoom(17);
+
+    this.eyemarker.setPosition(pos);
+
+}
+
 SpraycanMap.prototype.loadImages = function() {
 
     var self = this;
 
-    $.ajax('getImages.php', {
+    $.ajax('/getImages.php', {
         type: 'POST',
-        data: 'loaded='+this.loadedImages.join(','),
+        data: 'loaded='+this.loadedImages.join(',') + '&hotspot='+this.hotspot.substr(1),
         success: function(data) {
 
             if(!$.isEmptyObject(data)) {
@@ -54,7 +57,11 @@ SpraycanMap.prototype.loadImages = function() {
 
                     try {
                         this.geoData[keyDate] = JSON.parse(data[keyDate].geoData.replace(/\\/g,''));
-                        this.markers.push(this.addMarker(this.geoData[keyDate].geometry.location.lat,this.geoData[keyDate].geometry.location.lng,this.geoData[keyDate].formatted_address,data[keyDate].path));
+                        this.addMarker(this.geoData[keyDate].geometry.location.lat,this.geoData[keyDate].geometry.location.lng,this.geoData[keyDate].formatted_address,data[keyDate].path);
+
+                        if(Object.keys(this.geoData).length === 1 && this.hotspot !== '/') {
+                            this.setPosition(this.geoData[keyDate].geometry.location);
+                        }
                     } catch(e) {}
                 }
             }
@@ -91,8 +98,10 @@ SpraycanMap.prototype.addMarker = function(lat,lng,address,path) {
         content: content.html()
     });
 
+    var self = this;
+
     google.maps.event.addListener(marker, 'click', function(a,b,c) {
-        var img = $('<img />').attr('src','/img/uploads/'+this.imgPath).addClass('image');
+        var img = $('<img />').attr('src','/img/uploads' + self.hotspot + '/' + this.imgPath).addClass('image');
 
         // after image loaded, show it
         img.load(function(a,b,c) {

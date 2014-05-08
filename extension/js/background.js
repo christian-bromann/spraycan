@@ -1,37 +1,43 @@
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 
     console.log('got message: ', request);
-    if(request.action === 'takeScreenshot') {
+    if (request.action === 'takeScreenshot') {
         console.log('got request to take screenshot');
-        var geoData = JSON.stringify(request.geoData);
+        var geoData = JSON.stringify(request.geoData),
+            hotspot = request.hotspot;
 
         takeScreenshot(function(image) {
             console.log('got screenshot');
 
             chrome.tabs.getSelected(null, function(tab) {
                 console.log('clean up that shit');
-                chrome.tabs.sendMessage(tab.id, {action: 'cleanup'});
+                chrome.tabs.sendMessage(tab.id, {
+                    action: 'cleanup'
+                });
             });
 
-            uploadImage(image,geoData);
+            uploadImage(image, geoData, hotspot);
         });
     }
 
 });
 
 function takeScreenshot(cb) {
-    chrome.tabs.captureVisibleTab(null, {format:'png'}, cb);
+    chrome.tabs.captureVisibleTab(null, {
+        format: 'png'
+    }, cb);
 }
 
-function uploadImage(image,geoData) {
+function uploadImage(image, geoData, hotspot) {
     var xhr = new XMLHttpRequest();
     var formData = new FormData();
 
     formData.append('screenshot', image);
     formData.append('geodata', geoData);
+    formData.append('hotspot', hotspot);
 
     xhr.onreadystatechange = function() {
-        console.log('state change ',this.readyState);
+        console.log('state change ', this.readyState);
         if (this.readyState == 4) {
 
             var response = JSON.parse(xhr.response);
@@ -45,7 +51,7 @@ function uploadImage(image,geoData) {
         }
     };
 
-    xhr.open('POST', 'http://spraycan.de/upload.php', true);
+    xhr.open('POST', 'http://spraycan.dev/upload.php', true);
     xhr.setRequestHeader('Cache-Control', 'no-cache');
     xhr.send(formData);
     console.log('send request to server');

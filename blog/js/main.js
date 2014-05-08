@@ -23,6 +23,7 @@ function SpraycanBlog() {
 
     this.loaded = 0;
     this.checkNewImages = true;
+    this.hotspot = document.location.pathname;
 
     this.ui.loader.show();
     this.getImages();
@@ -37,9 +38,9 @@ SpraycanBlog.prototype.getImages = function() {
         return;
     }
 
-    $.ajax('getImages.php', {
+    $.ajax('/getImages.php', {
         type: 'POST',
-        data: 'loaded='+this.loadedImages.join(','),
+        data: 'loaded='+this.loadedImages.join(',') + '&hotspot='+this.hotspot.substr(1),
         success: function(data) {
 
             if(!$.isEmptyObject(data)) {
@@ -65,7 +66,9 @@ SpraycanBlog.prototype.getImages = function() {
                     ++i;
                     this.displayImage(image, true, i === this.getKeys(data).length);
                 }
+                this.ui.loader.show();
             } else {
+                this.ui.loader.hide();
                 window.setTimeout(this.getImages.bind(this),1000);
             }
         }.bind(this),
@@ -100,11 +103,11 @@ SpraycanBlog.prototype.displayImage = function(image,prepend,isLastImage) {
 
     var article = $('<a />')
         .css('display','none')
-        .attr('href','/img/uploads/'+image.path)
+        .attr('href','/img/uploads' + this.hotspot + '/' + image.path)
         .attr('rel','lightbox')
         .attr('title',geoData.formatted_address);
 
-    var img     = $('<img />').attr('src','/img/uploads/'+image.path);
+    var img     = $('<img />').attr('src','/img/uploads' + this.hotspot + '/' + image.path);
     var objects = {article:article,adressbar:adressbar,img:img,isLastImage:isLastImage};
 
     img.load(function(objects) {

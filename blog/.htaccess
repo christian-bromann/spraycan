@@ -1,3 +1,4 @@
 RewriteEngine on
 
 RewriteRule maps$ map.html
+RewriteRule ^(\w\w)$ index.html?hotspot=$1 [L]
