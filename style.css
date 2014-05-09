@@ -87,19 +87,7 @@ video {
 
 .screen.calibrate {
     color: #ffffff;
-    background: transparent;
-}
-.fixPoint {
-    background-color: #ffffff;
-    width: 60px;
-    height: 60px;
-    border-radius: 60px;
-    position: absolute;
-    border: 0;
-    top: 0;
-    left: 0;
-    margin-left: -30px;
-    margin-top: -30px;
+    background: black;
 }
 .fixPoints {
     width: 100%;
@@ -110,24 +98,29 @@ video {
     top: 0;
     left: 0;
 }
-.fixPoint.top {
-    left: 50%;
-    margin-top: 0px;
+.fixPoint {
+    background-color: #ffffff;
+    width: 60px;
+    height: 60px;
+    border-radius: 60px;
+    position: absolute;
+    border: 0;
 }
-.fixPoint.right {
+.fixPoint.tl {
+    left: 0;
+    top: 0;
+}
+.fixPoint.tr {
     right: 0;
-    left: auto;
-    top: 50%;
+    top: 0;
 }
-.fixPoint.bottom {
-    margin-top: 0px;
+.fixPoint.br {
     bottom: 0;
-    top: auto;
-    left: 50%;
+    right: 0;
 }
-.fixPoint.left {
-    top: 50%;
-    margin-left: 0;
+.fixPoint.bl {
+    bottom: 0;
+    left: 0;
 }
 
 .screen {
