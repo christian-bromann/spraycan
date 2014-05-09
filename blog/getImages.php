@@ -1,31 +1,45 @@
 <?php
+$hotspot      = isset($_POST['hotspot']) ? $_POST['hotspot'] : '';
+$directory    = $hotspot ? 'img/uploads/'.$hotspot.'/' : 'img/uploads/';
 
 class Image {
-    public function __construct($directory, $path) {
-        $this->path    = $path;
-        $this->geoData = file_get_contents($directory.substr($path,0,count($path)-5).'.txt');
+    public function __construct($directory, $id) {
+        $this->id      = $id;
+        $this->path    = $directory.substr($id,0,count($id)-5);
+        $this->geoData = file_get_contents($this->path.'.txt');
     }
 }
 
-$loadedImages = isset($_POST['loaded']) ? preg_split('/,/',$_POST['loaded']) : [];
-$ignoredFiles = array('.','..','.DS_Store');
-$images       = array();
-$hotspot      = isset($_POST['hotspot']) ? $_POST['hotspot'] : 'vs';
-$directory    = $hotspot ? 'img/uploads/'.$hotspot.'/' : 'img/uploads/';
+function readDirSync($directory,$img) {
 
-if(!is_dir($directory)) {
-    echo '';
-} else if (isset($loadedImages) && $handle = opendir($directory)) {
+    $loadedImages = isset($_POST['loaded']) ? preg_split('/,/',$_POST['loaded']) : [];
+    $ignoredFiles = array('.','..','.DS_Store');
+    $images       = $img ? $img : array();
 
-    while (false !== ($entry = readdir($handle))) {
-        
-        if(in_array($entry,$ignoredFiles) || in_array($entry,$loadedImages) || substr($entry,count($entry)-5) === '.txt' || strpos($entry,'.') === false) {
-            continue;
+    if($handle = opendir($directory)) {
+
+        while (false !== ($entry = readdir($handle))) {
+
+            if(strpos($entry,'.') === false) {
+                $images = readDirSync($directory.$entry.'/', $images);
+                continue;
+            } else if(in_array($entry,$ignoredFiles) || in_array($entry,$loadedImages) || substr($entry,count($entry)-5) === '.txt') {
+                continue;
+            }
+
+            $date = substr($entry,0,count($entry)-5);
+            $images[$date] = new Image($directory, $entry);
         }
 
-        $date = substr($entry,0,count($entry)-5);
-        $images[$date] = new Image($directory, $entry);
     }
+
+    return $images;
+    closedir($handle);
+}
+
+if(is_dir($directory)) {
+
+    $images = readDirSync($directory,null);
 
     header('Cache-Control: no-cache, must-revalidate');
     header('Content-type: application/json');
@@ -33,11 +47,8 @@ if(!is_dir($directory)) {
     if(count($images) && asort($images)) {
         echo json_encode($images);
     } else {
-        echo '';
+        echo '{}';
     }
 
-    closedir($handle);
-} else {
-    echo '';
+
 }
-?>

@@ -30,14 +30,16 @@ function SpraycanMap() {
     this.loadImages();
 }
 
-SpraycanMap.prototype.setPosition = function(pos) {
+SpraycanMap.prototype.setPosition = function(pos, noEyemarker) {
 
     pos = new google.maps.LatLng(pos.lat,pos.lng);
 
     this.map.setCenter(pos);
     this.map.setZoom(17);
 
-    this.eyemarker.setPosition(pos);
+    if(!noEyemarker) {
+        this.eyemarker.setPosition(pos);
+    }
 
 }
 
@@ -53,14 +55,14 @@ SpraycanMap.prototype.loadImages = function() {
             if(!$.isEmptyObject(data)) {
                 for(var keyDate in data) {
 
-                    this.loadedImages.push(data[keyDate].path);
+                    this.loadedImages.push(data[keyDate].id);
 
                     try {
                         this.geoData[keyDate] = JSON.parse(data[keyDate].geoData.replace(/\\/g,''));
                         this.addMarker(this.geoData[keyDate].geometry.location.lat,this.geoData[keyDate].geometry.location.lng,this.geoData[keyDate].formatted_address,data[keyDate].path);
 
                         if(Object.keys(this.geoData).length === 1 && this.hotspot !== '/') {
-                            this.setPosition(this.geoData[keyDate].geometry.location);
+                            this.setPosition(this.geoData[keyDate].geometry.location, true);
                         }
                     } catch(e) {}
                 }
@@ -85,7 +87,7 @@ SpraycanMap.prototype.addMarker = function(lat,lng,address,path) {
         map: this.map,
         title: address,
         icon: 'img/marker.png',
-        imgPath: path
+        imgPath: path + '.png'
     });
 
     var content = $('<div />').addClass('markerContainer').html(
@@ -101,7 +103,7 @@ SpraycanMap.prototype.addMarker = function(lat,lng,address,path) {
     var self = this;
 
     google.maps.event.addListener(marker, 'click', function(a,b,c) {
-        var img = $('<img />').attr('src','/img/uploads' + self.hotspot + '/' + this.imgPath).addClass('image');
+        var img = $('<img />').attr('src','/' + this.imgPath).addClass('image');
 
         // after image loaded, show it
         img.load(function(a,b,c) {
