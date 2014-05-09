@@ -12,7 +12,7 @@ class Image {
 
 function readDirSync($directory,$img) {
 
-    $loadedImages = isset($_POST['loaded']) ? preg_split('/,/',$_POST['loaded']) : [];
+    $loadedImages = isset($_POST['loaded']) ? preg_split('/,/',$_POST['loaded']) : array();
     $ignoredFiles = array('.','..','.DS_Store');
     $images       = $img ? $img : array();
 

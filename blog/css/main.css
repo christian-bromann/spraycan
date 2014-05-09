@@ -128,3 +128,9 @@ nav {
     border-top: 4px solid #fff;
     border-bottom: 4px solid #fff;
 }
+aside h1, aside p{
+    text-align: center;
+}
+aside h1 {
+    text-shadow: 1px 1px 1px red;
+}
