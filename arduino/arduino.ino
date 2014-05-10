@@ -10,6 +10,7 @@ float sourceVoltage=5.0;
 float voltageR2;
 float resistor;
 float resistorValue = 0;
+float resistorDiff = 0;
 
 int resistorPin = 3;
 int buttonPin = 9;
@@ -40,15 +41,18 @@ void loop() {
     }
     result=trunc(result/5);
 
-    voltageR2 = (sourceVoltage/1023.0) * result;
-    resistor = voltageR1 * (voltageR2 / (sourceVoltage - voltageR2));
+    if(result != 0) {
+        voltageR2 = (sourceVoltage/1023.0) * result;
+        resistor = voltageR1 * (voltageR2 / (sourceVoltage - voltageR2));
+        resistorDiff = resistor - resistorValue;
 
-    // only send resistor value if there was a change
-    if(resistorValue != resistor) {
-        Serial.print(F("%1%{\"resistorValue\":"));
-        Serial.print(resistor,2);
-        Serial.println(F("}1%1"));
-        resistorValue = resistor;
+        // only send resistor value if there was a change
+        if(resistor < 3000 && resistor > 0 && abs(resistorDiff) > 100) {
+            Serial.print(F("%1%{\"resistorValue\":"));
+            Serial.print(resistor,2);
+            Serial.println(F("}1%1"));
+            resistorValue = resistor;
+        }
     }
 
     // if can button was clicked send serial message

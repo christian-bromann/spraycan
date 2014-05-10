@@ -1,76 +1,44 @@
-var app       = require('http').createServer(),
-    io        = require('socket.io').listen(app),
-    fs        = require('fs'),
-    BTSP      = require('bluetooth-serial-port'),
-    serial    = new BTSP.BluetoothSerialPort(),
-    sockets   = [],
-    buffer    = "",
-    connected = false;
+var app        = require('http').createServer(),
+    io         = require('socket.io').listen(app),
+    fs         = require('fs'),
+    SerialPort = require("serialport"),
+    serial     = new SerialPort.SerialPort("/dev/tty.HC-05-DevB", { baudrate: 9600, parser: SerialPort.parsers.readline("\n") }),
+    sockets    = [],
+    buffer     = "";
 
 app.listen(8000);
 
 // register incoming socket connections
 io.sockets.on('connection', function (socket) {
     sockets.push(socket);
-
-    if(!connected) {
-        // search for bluetooth connections
-        serial.inquire();
-    }
 });
 
-serial.on('found', function(address, name) {
-    console.log(address,name);
- 
-    // check the found address with the address of the
-    // bluetooth enabled Arduino device here.
-    if(name !== 'HC-05') {
-        return false;
-    }
+serial.open(function () {
 
-    console.log('found bluetooth module',name, 'at address',address);
- 
-    serial.findSerialPortChannel(address, function(channel) {
-        console.log('found channel: ',channel);
-        serial.connect(address, channel, function() {
+    serial.on('data', function(data) {
 
-            connected = true;
+        // if(sockets.length === 0) {
+        //     return;
+        // }
 
-            serial.on('data', function(data) {
+        dataHandler(data);
 
-                if(sockets.length === 0) {
-                    return;
-                }
-
-                data = data.toString('utf-8');
-
-                if(data.indexOf('\r\n') >= 0) {
-                    dataHandler(buffer + data.split(/\r\n/)[0]);
-                    buffer = data.split(/\r\n/)[1];
-                } else {
-                    buffer += data;
-                }
-            });
-        }, function () {
-            console.log('cannot connect');
-        });
     });
 });
 
 var dataHandler = function(data) {
 
-    var msgBus = filterKey(data),
-        msg = clear(data);
+    var msgBus = filterKey(data);
 
     try {
-        msg = JSON.parse(msg);
+        data = JSON.parse(data.substr(3,data.length-7));
     } catch(e) {
         return;
     }
 
     switch(msgBus) {
         case 1:
-            emit('resistance',msg);
+            emit('resistance',data);
         break;
         case 2:
             emit('button',true);
@@ -79,20 +47,13 @@ var dataHandler = function(data) {
 
 };
 
-var clear = function(data) {
-    data = data.substr(3).replace(/\r\n/,'');
-
-    return data.substr(0,data.length - 3);
-};
-
 var filterKey = function(data) {
     var firstBytes = data.substr(0,3),
-        lastBytes = data.replace(/\r\n/,'').substr(data.length - 3),
+        lastBytes = data.substr(data.length - 4),
         key = firstBytes[1],
-        delimiter = firstBytes[0];
+        delimiter = '%';
 
-    if(firstBytes[2] === delimiter && lastBytes[1] === delimiter &&
-       lastBytes[0] === key && lastBytes[2] === key) {
+    if(firstBytes[2] === delimiter && lastBytes[1] === delimiter && lastBytes[0] === key && lastBytes[2] === key) {
         return parseInt(key,10);
     } else {
         return 0;
