@@ -1,4 +1,3 @@
-
 function SpraycanMap() {
 
     this.geoData = {};
@@ -23,7 +22,7 @@ function SpraycanMap() {
     // establish socket connection to update user position
     this.socket = io.connect('http://93.188.109.81:8001/');
     this.socket.on('position', this.setPosition.bind(this));
-    this.hotspot = document.location.pathname;
+    this.hotspot = document.location.pathname.indexOf('maps') === -1 ? document.location.pathname : '';
 
     // load images and initalize image markers
     this.loadedImages = [];
@@ -61,7 +60,7 @@ SpraycanMap.prototype.loadImages = function() {
                         this.geoData[keyDate] = JSON.parse(data[keyDate].geoData.replace(/\\/g,''));
                         this.addMarker(this.geoData[keyDate].geometry.location.lat,this.geoData[keyDate].geometry.location.lng,this.geoData[keyDate].formatted_address,data[keyDate].path);
 
-                        if(Object.keys(this.geoData).length === 1 && this.hotspot !== '/') {
+                        if(Object.keys(this.geoData).length === 1 && this.hotspot !== '' && this.hotspot !== '/') {
                             this.setPosition(this.geoData[keyDate].geometry.location, true);
                         }
                     } catch(e) {}
