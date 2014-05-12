@@ -15,6 +15,14 @@ io.sockets.on('connection', function (socket) {
 
 serial.open(function () {
 
+    serial.on('open', function() {
+        console.log('Spraycan connected!');
+    });
+
+    serial.on("close", function (data) {
+        console.log('Spraycan disconnected');
+    });
+
     serial.on('data', function(data) {
 
         // if(sockets.length === 0) {
@@ -33,8 +41,11 @@ var dataHandler = function(data) {
     try {
         data = JSON.parse(data.substr(3,data.length-7));
     } catch(e) {
+        console.log('error!');
         return;
     }
+
+    console.log(msgBus,data);
 
     switch(msgBus) {
         case 1:
