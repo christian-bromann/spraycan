@@ -40,7 +40,6 @@ body > canvas, body > .maps {
     top: 0;
     z-index: 1;
     margin: 0 auto;
-    opacity: 0.4;
 }
 body > div {
     width: 100%;
@@ -182,7 +181,7 @@ video {
     position: fixed;
     bottom: 0;
     background: #00fbba;
-    z-index: 0;
+    z-index: 100;
     display: -webkit-box;
     -webkit-box-pack:center;
     -webkit-box-align:center;

@@ -51,7 +51,7 @@ function uploadImage(image, geoData, hotspot) {
         }
     };
 
-    xhr.open('POST', 'http://spraycan.dev/upload.php', true);
+    xhr.open('POST', 'http://spraycan.de/upload.php', true);
     xhr.setRequestHeader('Cache-Control', 'no-cache');
     xhr.send(formData);
     console.log('send request to server');
